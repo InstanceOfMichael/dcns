@@ -99,6 +99,7 @@ Map.prototype.draw = function(p){ //params
       json:coord.toJson()
     });
     
+    var fts = p.ts * p.z; // final tile size
     var r = {
       x: p.ox + p.ts * p.z * (coord.x) + (p.ts * p.z * (coord.y)*0.5),
       y: p.oy + p.ts * p.z * (coord.y),
@@ -108,13 +109,13 @@ Map.prototype.draw = function(p){ //params
     };
     
     console.log({r:r,p:p});
-    if (r.x + p.ts * p.z < -5 || r.x + 5 > p.cw || r.y + p.hdft + p.ts * p.z < -5 || r.y + p.hdft + 5 > p.ch)
+    if (r.x + fts < 0 || r.x > p.cw || r.y + p.hdft + fts < 0 || r.y - p.hdft > p.ch)
     {
       if (map.render_from_tile_id == tile.get('id'))
       {
         var nTile = tile;
         var nCoord = new Coordinate(coord)
-        if (r.x + p.ts * p.z < -5 && nTile.n('east').n('east'))
+        if (r.x + fts < -5 && nTile.n('east').n('east'))
         {
           nTile = nTile.n('east').n('east');
           nCoord = nCoord.east().east();
@@ -124,7 +125,7 @@ Map.prototype.draw = function(p){ //params
           nTile = nTile.n('west').n('west');
           nCoord = nCoord.west().west();
         }
-        if (r.y + p.hdft + p.ts * p.z < -5 && nTile.n('se'))
+        if (r.y + p.hdft + fts < -5 && nTile.n('se'))
         {
           nTile = nTile.n('se');
           nCoord = nCoord.se();
