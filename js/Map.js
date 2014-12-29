@@ -249,3 +249,29 @@ Map.prototype.draw = function(p){ //params
   return;
 };
 var debug_c1;
+Map.prototype.getTileFromMouseEvent = function(mu){//mouse up event
+  var p = this.get('draw_params',{});
+  var coord = XY(
+    (((mu.coord.x - (0.5*p.cw*(1-p.z)))/p.z) - p.ox)/p.ts,
+    (((mu.coord.y - (0.5*p.ch*(1-p.z)))/p.z) - p.oy)/p.ts
+  );
+  coord.x = coord.x - (Math.floor(coord.y)*0.5);
+  
+  coord.x = Math.floor(coord.x);
+  coord.y = Math.floor(coord.y);
+  
+  console.log(this);
+  var h = {
+    tile:  this.attr.tiles[this.render_from_tile_id]||null,
+    coord: this.render_from_coord ? new Coordinate(this.render_from_coord) : XY(0,0) //home coordinate
+  };
+  
+  return h.tile.travel(h.coord,coord);
+}
+Map.prototype.unselectAll = function(){
+  this.selected = this.selected.filter(function(s){
+    s.model.selected = null; return false;
+  });
+  console.log(this);
+  return this;
+}

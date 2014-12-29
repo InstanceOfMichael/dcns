@@ -17,6 +17,35 @@ Tile.prototype.n = function (k){//get neighbor
   }
   return null;
 };
+Tile.prototype.travel = function (c1,c2){//coord1, coord2
+  co = c1;
+  var dest = null;
+  do{
+    if (c1.x > c2.x)
+    {
+      c1 = c1.west();
+      dest = (dest||this).n('west');
+    }
+    else if (c1.x < c2.x)
+    {
+      c1 = c1.east();
+      dest = (dest||this).n('east');
+    }
+    if (c1.y > c2.y)
+    {
+      c1 = c1.nw();
+      dest = (dest||this).n('nw');
+    }
+    else if (c1.y < c2.y)
+    {
+      c1 = c1.se();
+      dest = (dest||this).n('se');
+    }
+  }
+  while(c1.toJson()!=c2.toJson() && dest);
+  
+  return dest;
+};
 Tile.prototype.draw = function(c,r,p,coord,d)
 {
   var x = r.x;
@@ -101,6 +130,27 @@ Tile.prototype.draw = function(c,r,p,coord,d)
     c.restore();
   }
   c.stroke();
+  
+  if (this.selected)
+  {
+    c.save();
+    
+    c.fillStyle="rgb(255,0,0)";
+  
+    c.beginPath();
+    c.lineWidth=2;
+    c.moveTo(x, y + p.hdft);
+    c.lineTo(x + fts/2, y - p.hdft);
+    c.lineTo(x + fts,   y + p.hdft);
+    c.lineTo(x + fts,   y - p.hdft + fts);
+    c.lineTo(x + fts/2, y + p.hdft + fts);
+    c.lineTo(x, y - p.hdft + fts);
+    c.closePath();
+    
+    c.stroke();
+    
+    c.restore();
+  }
   
   return;
 };
