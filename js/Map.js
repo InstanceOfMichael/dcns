@@ -118,33 +118,39 @@ Map.prototype.draw = function(p){ //params
         console.info('render_from_tile: Not Inside drawable area: '+tile.get('id'));
         var nTile = tile;
         var nCoord = new Coordinate(coord)
-        if (r.y + p.hdft + fts < 0 && nTile.n('se'))
+        if (r.y - p.hdft > p.ch && nTile.n('ne'))
         {
-          nTile = nTile.n('se');
-          nCoord = nCoord.se();
-          if (nTile.n('sw'))
+          console.log('moving ne...');
+          nTile = nTile.n('ne');
+          nCoord = nCoord.ne();
+          if (nTile.n('nw'))
           {
-            nTile = nTile.n('sw');
-            nCoord = nCoord.sw();
+            console.log('then moving nw...');
+            nTile = nTile.n('nw');
+            nCoord = nCoord.nw();
           }
         }
-        if (r.y - p.hdft > p.ch && nTile.n('sw'))
+        if (r.y + p.hdft + fts < 0 && nTile.n('sw'))
         {
+          console.log('moving sw...');
           nTile = nTile.n('sw');
           nCoord = nCoord.sw();
           if (nTile.n('se'))
           {
+            console.log('then moving se...');
             nTile = nTile.n('se');
             nCoord = nCoord.se();
           }
         }
         if (r.x + fts < 0 && nTile.n('east').n('east'))
         {
+          console.log('moving 2 east...');
           nTile = nTile.n('east').n('east');
           nCoord = nCoord.east().east();
         }
         if (r.x > p.cw && nTile.n('west').n('west'))
         {
+          console.log('moving 2 west...');
           nTile = nTile.n('west').n('west');
           nCoord = nCoord.west().west();
         }
