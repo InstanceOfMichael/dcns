@@ -19,8 +19,8 @@ Tile.prototype.n = function (k){//get neighbor
 };
 Tile.prototype.draw = function(c,r,p,coord,d)
 {
-  var x = r.x + 200;
-  var y = r.y + 120;
+  var x = r.x;
+  var y = r.y;
   var d = r.d;
   var fts = p.z*p.ts;//final tile size
   var coord = r.coord;

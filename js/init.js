@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function(){
   c = cDOM.getContext("2d");
   
   G.map = new RandomMap({
-    width:32,
-    height:24
+    width:32*2,
+    height:24*2
   });
   G.map.canvas = c;
   G.ie = new InputEvents(G,cDOM);
@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', function(){
   }
   
   G.draw({
-    cw:400,
-    ch:240,
+    cw:800,
+    ch:480,
     ox:0,
     oy:0,
     ts:48

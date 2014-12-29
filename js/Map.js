@@ -70,7 +70,7 @@ Map.prototype.draw = function(p){ //params
   //this.draw_count++;
 
   //blank background
-  c.clearRect(200+0, 120+0, p.cw, p.ch);
+  c.clearRect(0, 0, p.cw, p.ch);
   
   tile = this.attr.tiles[p.tile_id];
   
@@ -112,7 +112,7 @@ Map.prototype.draw = function(p){ //params
     };
     if (map.render_from_tile_id == tile.get('id'))
     {
-      console.log({p:p,r:r});
+      //console.log({p:p,r:r});
     }
     
     if (r.x + fts < 0 || r.x > p.cw || r.y + p.hdft + fts < 0 || r.y - p.hdft > p.ch)
@@ -220,7 +220,7 @@ Map.prototype.draw = function(p){ //params
     null,
     dir
   );
-  c.rect(200+0, 120+0, p.cw, p.ch); c.stroke();
+  c.rect(0, 0, p.cw, p.ch); c.stroke();
   
   return;
 };
