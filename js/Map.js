@@ -51,6 +51,8 @@ Map.prototype.draw = function(p){ //params
   this.drawn_tiles = {};
   this.drawn_tiles_coords = [];
   
+  var max_tile_recursion_depth = 10;
+  
   debug_c1 = 0; // global!
 
 
@@ -86,12 +88,12 @@ Map.prototype.draw = function(p){ //params
       //console.info("already drawn "+coord.toJson()+" id: "+tile.get('id','invalid_id'));
       return;
     }
-    if (!tile_recursion_depth) 
+    if (tile_recursion_depth > max_tile_recursion_depth)
     {
       //console.log("max iteration reached cancelling "+coord.toJson()+" id: "+tile.get('id','invalid_id'));
       return;
     }
-    tile_recursion_depth--;
+    tile_recursion_depth++;
     map.drawn_tiles[tile.get('id')] = 1;
     map.drawn_tiles_coords.push({
       id:tile.get('id'),
@@ -152,7 +154,7 @@ Map.prototype.draw = function(p){ //params
           map.render_from_coord = nCoord;
         }
         
-        return fn(c,map,nTile,nCoord,p,fn,tile_recursion_depth+1,null,null);
+        return fn(c,map,nTile,nCoord,p,fn,tile_recursion_depth,null,null);
       
       }
       else
@@ -198,7 +200,7 @@ Map.prototype.draw = function(p){ //params
     coord,
     p,
     fn,
-    2*parseInt(1.1*p.cw/p.ts),
+    0,
     null,
     null
   );
