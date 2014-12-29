@@ -5,16 +5,24 @@ document.addEventListener('DOMContentLoaded', function(){
   G = new Game();
 
   
-  cDOM = document.getElementById("game");
-  
-  c = cDOM.getContext("2d");
   
   G.map = new RandomMap({
     width:32*2,
     height:24*2
   });
-  G.map.canvas = c;
-  G.ie = new InputEvents(G,cDOM);
+  G.map.canvas = {
+    tiles1:'layer1',
+    tiles2:'layer2',
+    tiles3:'layer3',
+    ui1:'layer4',
+    ui2:'layer5',
+    ui3:'layer6'
+  };
+  for(var k in G.map.canvas)
+  {
+    G.map.canvas[k] = document.getElementById(G.map.canvas[k]).getContext("2d");
+  }
+  G.ie = new InputEvents(G);
   G.ie.init();
   
   // set property that would normally be

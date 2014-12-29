@@ -94,7 +94,9 @@ Map.prototype.draw = function(p){ //params
   //this.draw_count++;
 
   //blank background
-  c.clearRect(0, 0, p.cw, p.ch);
+  c.tiles1.clearRect(0, 0, p.cw, p.ch);
+  c.tiles2.clearRect(0, 0, p.cw, p.ch);
+  c.tiles3.clearRect(0, 0, p.cw, p.ch);
   
   tile = this.attr.tiles[p.tile_id];
   
@@ -244,7 +246,7 @@ Map.prototype.draw = function(p){ //params
     null,
     dir
   );
-  c.rect(0, 0, p.cw, p.ch); c.stroke();
+  c.ui1.rect(0, 0, p.cw, p.ch); c.ui1.stroke();
   
   return;
 };

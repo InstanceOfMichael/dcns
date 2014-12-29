@@ -1,5 +1,5 @@
-﻿function InputEvents (game,canvas) {
-  this.canvas = canvas;
+﻿function InputEvents (game) {
+  //this.canvas_container = canvas_container;
   this.game = game;
   this.long_left_click = null;
   this.drag_active = null;
@@ -7,15 +7,15 @@
   this.keys_down = {};
 }
 InputEvents.prototype.init = function(){
-  //this.canvas.addEventListener('click', this, false);
-  this.canvas.addEventListener('mousedown', this, false);
-  this.canvas.addEventListener('mouseup', this, false);
-  this.canvas.addEventListener('mousemove', this, false);
+  //document.addEventListener('click', this, false);
+  document.addEventListener('mousedown', this, false);
+  document.addEventListener('mouseup', this, false);
+  document.addEventListener('mousemove', this, false);
   //window.addEventListener('keypress', this, false);
   window.addEventListener('keydown', this, false);
   window.addEventListener('keyup', this, false);
-  //this.canvas.addEventListener('touchstart', this, false);
-  //this.canvas.addEventListener('contextmenu', this, false);
+  //document.addEventListener('touchstart', this, false);
+  //document.addEventListener('contextmenu', this, false);
   document.oncontextmenu = function(e){
     e.preventDefault();
     e.stopPropagation();
