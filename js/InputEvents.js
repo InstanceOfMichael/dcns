@@ -152,6 +152,28 @@ InputEvents.prototype.handleEvent = function(e){
 }
 InputEvents.prototype.doOnLeftClick = function(md,mu){
   //console.info('on Left Click!');
+  
+  console.log('mouse at: '+mu.coord.toJson());
+  
+  var fts = this.game.map.getFinalTileSize();
+  var p = this.game.map.get('draw_params',{});
+  console.log(p);
+  //  x: (0.5*p.cw*(1-p.z)) + p.z * (coord.x * p.ts + p.ox) + (p.ts * p.z * (coord.y)*0.5),
+  //  y: (0.5*p.ch*(1-p.z)) + p.z * (coord.y * p.ts + p.oy),
+  var coord = XY(
+    //((mu.coord.x - (0.5*p.cw*(1-p.z)))/(p.z) - p.ox)/p.ts, // not complete, needs y%2 from y value
+    //((mu.coord.y - (0.5*p.ch*(1-p.z)))/(p.z) - p.oy)/p.ts
+    (((mu.coord.x - (0.5*p.cw*(1-p.z)))/p.z) - p.ox)/p.ts,
+    (((mu.coord.y - (0.5*p.ch*(1-p.z)))/p.z) - p.oy)/p.ts
+  );
+  console.log(coord);
+  coord.x = coord.x - (Math.floor(coord.y)*0.5);
+  
+  coord.x = Math.floor(coord.x);
+  coord.y = Math.floor(coord.y);
+  
+  console.log(coord);
+  
 }
 InputEvents.prototype.doOnMiddleClick = function(md,mu){
   //console.info('on Middle Click!');

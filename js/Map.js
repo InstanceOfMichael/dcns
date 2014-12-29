@@ -29,10 +29,31 @@ Map.prototype.hydrate = function(a){
       console.log(this.attr.tiles[tile_id]);
       continue;
     }
+    if (typeof this.attr.tiles[tile_id].hydrate != 'function')
+    {
+      this.attr.tiles[tile_id] = new Tile(this.attr.tiles[tile_id]);
+    }
     this.attr.tiles[tile_id].parent = this;
   }
 }
-Map.prototype.dump = ModelTrait.dump;
+Map.prototype.dump = function(){
+  var a = ModelTrait.dump.call(this);
+
+  var tiles = [];
+  for(var tile_id in this.attr.tiles)
+  {
+    var tile = this.attr.tiles[tile_id];
+    if (typeof tile.dump == 'function')
+    {
+      tile = tile.dump();
+    }
+    tiles.push(tile);
+  }
+  a.tiles = tiles;
+  delete a.draw_params;//this should be stored in the user data or not stored
+  
+  return a;
+};
 Map.prototype.setZeroTile = function(tile){
   this.zero_tile_id = tile.get('id')||tile;
   return this;
@@ -44,6 +65,9 @@ Map.prototype.setRenderFromTile = function(tile){
 Map.prototype.getTile = function(id){
   return this.attr.tiles[id]||null;
 };
+Map.prototype.getFinalTileSize = function(){
+  return this.get('draw_params').ts * this.get('draw_params').z;
+}
 Map.prototype.draw = function(p){ //params
   var c = this.canvas;
   var tile = null;

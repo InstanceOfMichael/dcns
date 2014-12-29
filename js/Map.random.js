@@ -95,6 +95,9 @@ function RandomMap(io) // x, y, percent land, land seeds
 
   this.attr.tiles = this.tiles_hash;
   
+  delete this.attr.land_ratio;
+  delete this.attr.land_seeds;
+  
   return new Map(this.attr);
 }
 RandomMap.prototype.get = ModelTrait.get;

@@ -73,27 +73,31 @@ Tile.prototype.draw = function(c,r,p,coord,d)
     {
       c.fillStyle = "white";
       c.font = (fts*0.20)+"px monospace";
-      c.fillText(coord.x+','+coord.y, x, y+fts/2);
+      c.fillText(coord.x+','+coord.y, x+(fts*0.2), y+fts/2);
       this.coord = coord.toJson();
     }
 
-    c.fillStyle = "white";//"rgb(80,95,180)";
-    c.font = (fts*0.20)+"px monospace";
-    c.fillText("#"+debug_c1++ + " d:" + tile_recursion_depth, x, y+fts/4);
-    
-    d = d||'o';
-    if (d=='o')
-    {
-      c.shadowColor = "black";
-      c.shadowOffsetX = 0.75; // integer
-      c.shadowOffsetY = 0.75; // integer
-      c.shadowBlur = 2;
-      c.fillStyle = "yellow";
+    if (false){
+      c.fillStyle = "white";//"rgb(80,95,180)";
+      c.font = (fts*0.20)+"px monospace";
+      c.fillText("#"+debug_c1++ + " d:" + tile_recursion_depth, x, y+fts/4);
     }
-    c.font = (fts*0.20)+"px monospace";
-    c.fillText(d, x+(fts*0.25), y+fts*0.9);
     
-    c.stroke();
+    if (false){
+      d = d||'o';
+      if (d=='o')
+      {
+        c.shadowColor = "black";
+        c.shadowOffsetX = 0.75; // integer
+        c.shadowOffsetY = 0.75; // integer
+        c.shadowBlur = 2;
+        c.fillStyle = "yellow";
+      }
+      c.font = (fts*0.20)+"px monospace";
+      c.fillText(d, x+(fts*0.25), y+fts*0.9);
+      
+      c.stroke();
+    }
     c.restore();
   }
   c.stroke();
