@@ -110,24 +110,15 @@ Map.prototype.draw = function(p){ //params
       tile_recursion_depth:tile_recursion_depth
     };
     
-    console.log({r:r,p:p});
+    //console.log({r:r,p:p});
     if (r.x + fts < 0 || r.x > p.cw || r.y + p.hdft + fts < 0 || r.y - p.hdft > p.ch)
     {
       if (map.render_from_tile_id == tile.get('id'))
       {
+        console.info('render_from_tile: Not Inside drawable area: '+tile.get('id'));
         var nTile = tile;
         var nCoord = new Coordinate(coord)
-        if (r.x + fts < -5 && nTile.n('east').n('east'))
-        {
-          nTile = nTile.n('east').n('east');
-          nCoord = nCoord.east().east();
-        }
-        if (r.x + 5 > p.cw && nTile.n('west').n('west'))
-        {
-          nTile = nTile.n('west').n('west');
-          nCoord = nCoord.west().west();
-        }
-        if (r.y + p.hdft + fts < -5 && nTile.n('se'))
+        if (r.y + p.hdft + fts < 0 && nTile.n('se'))
         {
           nTile = nTile.n('se');
           nCoord = nCoord.se();
@@ -137,7 +128,7 @@ Map.prototype.draw = function(p){ //params
             nCoord = nCoord.sw();
           }
         }
-        if (r.y + p.hdft + 5 > p.ch && nTile.n('sw'))
+        if (r.y - p.hdft > p.ch && nTile.n('sw'))
         {
           nTile = nTile.n('sw');
           nCoord = nCoord.sw();
@@ -147,21 +138,34 @@ Map.prototype.draw = function(p){ //params
             nCoord = nCoord.se();
           }
         }
-        
-        if (nTile.get('id'))
+        if (r.x + fts < 0 && nTile.n('east').n('east'))
         {
-          map.setRenderFromTile(nTile);
-          map.render_from_coord = nCoord;
+          nTile = nTile.n('east').n('east');
+          nCoord = nCoord.east().east();
+        }
+        if (r.x > p.cw && nTile.n('west').n('west'))
+        {
+          nTile = nTile.n('west').n('west');
+          nCoord = nCoord.west().west();
         }
         
-        return fn(c,map,nTile,nCoord,p,fn,tile_recursion_depth,null,null);
-      
+        if (nTile.get('id')!=tile.get('id'))
+        {
+          console.info('render_from_tile: selecting replacement: '+nTile.get('id')+' from: '+coord.toJson()+' to: '+nCoord.toJson());
+          map.setRenderFromTile(nTile);
+          map.render_from_coord = nCoord;
+          return fn(c,map,nTile,nCoord,p,fn,0,null,null);
+        }
+        else
+        {
+          console.error('render_from_tile: no sutable replacement');
+          return;
+        }
       }
       else
       {
-      
+        return;
       }
-      return;
     }
     
     tile.draw(

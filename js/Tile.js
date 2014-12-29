@@ -80,8 +80,15 @@ Tile.prototype.draw = function(c,r,p,coord,d)
     c.font = (p.ts*0.20)+"px monospace";
     c.fillText("#"+debug_c1++ + " d:" + tile_recursion_depth, x, y+p.ts/4);
     
-    c.fillStyle = "white";//"cyan";
-    d = d||'c';
+    d = d||'o';
+    if (d=='o')
+    {
+      c.shadowColor = "black";
+      c.shadowOffsetX = 0.75; // integer
+      c.shadowOffsetY = 0.75; // integer
+      c.shadowBlur = 2;
+      c.fillStyle = "yellow";
+    }
     c.font = (p.ts*0.20)+"px monospace";
     c.fillText(d, x+(p.ts*0.25), y+p.ts*0.9);
     

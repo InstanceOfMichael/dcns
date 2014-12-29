@@ -148,19 +148,19 @@ InputEvents.prototype.handleEvent = function(e){
   return false;
 }
 InputEvents.prototype.doOnLeftClick = function(md,mu){
-  console.info('on Left Click!');
+  //console.info('on Left Click!');
 }
 InputEvents.prototype.doOnMiddleClick = function(md,mu){
-  console.info('on Middle Click!');
+  //console.info('on Middle Click!');
 }
 InputEvents.prototype.doOnLongLeftClick = function(md,mu){
-  console.info('on Long Left Click!');
+  //console.info('on Long Left Click!');
 }
 InputEvents.prototype.doOnRightClick = function(md,mu){
-  console.info('on Right Click!');
+  //console.info('on Right Click!');
 }
 InputEvents.prototype.doOnUnknownClick = function(md,mu){
-  console.info('on Unknown Click!');
+  //console.info('on Unknown Click!');
 }
 InputEvents.prototype.doOnDragStart = function(md){
   this.drag_active = md;
@@ -171,7 +171,7 @@ InputEvents.prototype.doOnDragStop = function(md){
   this.drag_active = null;
 }
 InputEvents.prototype.doOnArrowKey = function(md){
-  console.info('on Arrow Key!');
+  //console.info('on Arrow Key!');
   if (this.drag_active) return;
   
   //console.log(this.keys_down);
