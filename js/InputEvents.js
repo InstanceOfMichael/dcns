@@ -176,12 +176,23 @@ InputEvents.prototype.doOnDragStop = function(md){
 InputEvents.prototype.doOnZoomKey = function(md){
   //zoom!
   var p = { //params
-    z : this.game.map.get('draw_params',{z:1}).z,
+    ox : this.game.map.get('draw_params',{ox:0}).ox,
+    oy : this.game.map.get('draw_params',{oy:0}).oy,
+    z : this.game.map.get('draw_params',{z:1}).z
   };
   
   
-  if (typeof this.keys_down[189] != 'undefined') { p.z -= 0.15; } // zoom out
-  if (typeof this.keys_down[187] != 'undefined') { p.z += 0.15; } // zoom in
+  if (typeof this.keys_down[189] != 'undefined') // zoom out
+  {
+    p.z -= 0.15;
+  }
+  if (typeof this.keys_down[187] != 'undefined') // zoom in
+  {
+    p.z += 0.15;
+  }
+  
+  p.z = Math.min(Math.max(p.z,0.55),3.25)
+  
   console.log('zoom now set to: '+p.z);
   
   this.game.draw(p);

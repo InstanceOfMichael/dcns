@@ -104,12 +104,16 @@ Map.prototype.draw = function(p){ //params
     
     var fts = p.ts * p.z; // final tile size
     var r = {
-      x: p.z * (coord.x * p.ts + p.ox) + (p.ts * p.z * (coord.y)*0.5),
-      y: p.z * (coord.y * p.ts + p.oy),
+      x: (0.5*p.cw*(1-p.z)) + p.z * (coord.x * p.ts + p.ox) + (p.ts * p.z * (coord.y)*0.5),
+      y: (0.5*p.ch*(1-p.z)) + p.z * (coord.y * p.ts + p.oy),
       coord:coord,
       d:d,
       tile_recursion_depth:tile_recursion_depth
     };
+    if (map.render_from_tile_id == tile.get('id'))
+    {
+      console.log({p:p,r:r});
+    }
     
     if (r.x + fts < 0 || r.x > p.cw || r.y + p.hdft + fts < 0 || r.y - p.hdft > p.ch)
     {
