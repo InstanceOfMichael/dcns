@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', function(){
   c = cDOM.getContext("2d");
   
   G.map = new RandomMap({
-    width:64,
-    height:48
+    width:32,
+    height:24
   });
   G.map.canvas = c;
   G.ie = new InputEvents(G,cDOM);
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function(){
     ch:240,
     ox:0,
     oy:0,
-    ts:64
+    ts:48
   });
   
   //var t = G.map.getTile(G.map.drawn_tiles_coords[0].id);

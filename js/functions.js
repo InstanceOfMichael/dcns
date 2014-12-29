@@ -71,6 +71,21 @@ var dir = [
   'se',
   'sw'
 ];
+function without_opposite_dir(a,d){
+  var v = {
+  'west':"east",
+  'nw':"se",
+  'ne':"sw",
+  'east':"west",
+  'se':"nw",
+  'sw':"ne"
+  }[d]||null;
+  
+  return a.filter(function(e)
+  {
+    return e!=v;
+  });
+};
 function generate_sub_direction_arr(d){
   return {
     'west':['sw','west'],

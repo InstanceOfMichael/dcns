@@ -51,8 +51,6 @@ Map.prototype.draw = function(p){ //params
   this.drawn_tiles = {};
   this.drawn_tiles_coords = [];
   
-  var max_tile_recursion_depth = 10;
-  
   debug_c1 = 0; // global!
 
 
@@ -62,9 +60,12 @@ Map.prototype.draw = function(p){ //params
   },p);
   this.set('draw_params',p);
   
-  console.info("Map.render()")
-  console.log(this);
-  console.log(p);
+  var max_tile_recursion_depth = parseInt((p.cw*p.ch)/(p.ts*p.ts));
+  //console.info('max_tile_recursion_depth: '+max_tile_recursion_depth);
+
+  //console.info("Map.render()")
+  //console.log(this);
+  //console.log(p);
   
   //this.draw_count++;
 
@@ -103,63 +104,55 @@ Map.prototype.draw = function(p){ //params
     
     var fts = p.ts * p.z; // final tile size
     var r = {
-      x: p.ox + p.ts * p.z * (coord.x) + (p.ts * p.z * (coord.y)*0.5),
-      y: p.oy + p.ts * p.z * (coord.y),
+      x: p.z * (coord.x * p.ts + p.ox) + (p.ts * p.z * (coord.y)*0.5),
+      y: p.z * (coord.y * p.ts + p.oy),
       coord:coord,
       d:d,
       tile_recursion_depth:tile_recursion_depth
     };
     
-    //console.log({r:r,p:p});
     if (r.x + fts < 0 || r.x > p.cw || r.y + p.hdft + fts < 0 || r.y - p.hdft > p.ch)
     {
       if (map.render_from_tile_id == tile.get('id'))
       {
-        console.info('render_from_tile: Not Inside drawable area: '+tile.get('id'));
         var nTile = tile;
         var nCoord = new Coordinate(coord)
         if (r.y - p.hdft > p.ch && nTile.n('ne'))
         {
-          console.log('moving ne...');
           nTile = nTile.n('ne');
           nCoord = nCoord.ne();
           if (nTile.n('nw'))
           {
-            console.log('then moving nw...');
             nTile = nTile.n('nw');
             nCoord = nCoord.nw();
           }
         }
         if (r.y + p.hdft + fts < 0 && nTile.n('sw'))
         {
-          console.log('moving sw...');
           nTile = nTile.n('sw');
           nCoord = nCoord.sw();
           if (nTile.n('se'))
           {
-            console.log('then moving se...');
             nTile = nTile.n('se');
             nCoord = nCoord.se();
           }
         }
         if (r.x + fts < 0 && nTile.n('east').n('east'))
         {
-          console.log('moving 2 east...');
           nTile = nTile.n('east').n('east');
           nCoord = nCoord.east().east();
         }
         if (r.x > p.cw && nTile.n('west').n('west'))
         {
-          console.log('moving 2 west...');
           nTile = nTile.n('west').n('west');
           nCoord = nCoord.west().west();
         }
         
         if (nTile.get('id')!=tile.get('id'))
         {
-          console.info('render_from_tile: selecting replacement: '+nTile.get('id')+' from: '+coord.toJson()+' to: '+nCoord.toJson());
           map.setRenderFromTile(nTile);
-          map.render_from_coord = nCoord;
+          map.render_from_coord = nCoord;//.wrapX(map); //p.ox probably needs to be changed to use this
+          //console.log(nCoord.toJson()+nCoord.wrapX(map).toJson());
           return fn(c,map,nTile,nCoord,p,fn,0,null,null);
         }
         else
@@ -170,19 +163,28 @@ Map.prototype.draw = function(p){ //params
       }
       else
       {
-        return;
+        //return; // cancel draw, but some neighbors still need to be queued, so dont return here
       }
     }
+    else
+    {
+      tile.draw(
+        c,
+        r,
+        p
+      );
+    }
     
-    tile.draw(
-      c,
-      r,
-      p
-    );
+    // dont recursively queue neighbors that wont show up.
+    if (r.x + fts + p.ch < 0 || r.x > p.cw + p.cw || r.y + p.hdft + p.cw + fts < 0 || r.y - p.hdft > p.ch + p.cw)
+    {
+      return;
+    }
     
     if (sub_dir && sub_dir.length > 3) sub_dir = null;
     
     sub_dir = sub_dir||generate_sub_direction_arr(d);
+    //var sub_dir = dir;
     
     for(var y = 0; y < sub_dir.length; y++)
     {
@@ -197,7 +199,7 @@ Map.prototype.draw = function(p){ //params
         fn,
         tile_recursion_depth,
         sub_dir[y],
-        sub_dir
+        without_opposite_dir(sub_dir,sub_dir[y])
       );
     }
     return true;
@@ -212,7 +214,7 @@ Map.prototype.draw = function(p){ //params
     fn,
     0,
     null,
-    null
+    dir
   );
   c.rect(200+0, 120+0, p.cw, p.ch); c.stroke();
   

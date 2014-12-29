@@ -111,16 +111,19 @@ InputEvents.prototype.handleEvent = function(e){
   }
   else if (e.type == 'keydown')
   {
-    this.keys_down[e.which] = kd;
     var kd = e;
+    this.keys_down[e.which] = kd;
     if ({37:1,38:1,39:1,40:1}[e.which])
     {
-      this.keys_down[e.which] = kd;
       this.doOnArrowKey(kd);
+    }
+    else if ({187:1,189:1}[e.which])
+    {
+      this.doOnZoomKey(kd);
     }
     else
     {
-      //console.error(e.type+' '+e.which);
+      console.error(e.type+' '+e.which);
       //console.log(e);
     }
   }
@@ -169,6 +172,20 @@ InputEvents.prototype.doOnDragStart = function(md){
 InputEvents.prototype.doOnDragStop = function(md){
   //console.info('on Drag Stop!');
   this.drag_active = null;
+}
+InputEvents.prototype.doOnZoomKey = function(md){
+  //zoom!
+  var p = { //params
+    z : this.game.map.get('draw_params',{z:1}).z,
+  };
+  
+  
+  if (typeof this.keys_down[189] != 'undefined') { p.z -= 0.15; } // zoom out
+  if (typeof this.keys_down[187] != 'undefined') { p.z += 0.15; } // zoom in
+  console.log('zoom now set to: '+p.z);
+  
+  this.game.draw(p);
+
 }
 InputEvents.prototype.doOnArrowKey = function(md){
   //console.info('on Arrow Key!');
