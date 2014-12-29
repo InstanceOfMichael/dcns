@@ -44,6 +44,11 @@ Coordinate.prototype.wrapX = function (o)
   }
   return this;
 };
+Coordinate.prototype.within = function(dis,coord)
+{
+  return linear_distance(coord,this) < dis;
+};
+
 function TestCoordinate (){
   console.log({
     'XY(1,2).nw()':XY(1,2).nw().toJson(),

@@ -50,6 +50,19 @@ function assert(condition, message) {
   }
   return true;
 }
+function linear_distance( p1, p2 )// http://snipplr.com/view/47207/
+{
+  var xs = 0;
+  var ys = 0;
+ 
+  xs = p2.x - p1.x;
+  xs = xs * xs;
+ 
+  ys = p2.y - p1.y;
+  ys = ys * ys;
+ 
+  return Math.sqrt( xs + ys );
+}
 var dir = [
   'west',
   'nw',
@@ -60,11 +73,11 @@ var dir = [
 ];
 function generate_sub_direction_arr(d){
   return {
-  'west':['sw','west'],
-  'nw':['west','nw'],
-  'ne':['nw','ne'],
-  'east':['ne','east'],
-  'se':['east','se'],
-  'sw':['se','sw']
+    'west':['sw','west'],
+    'nw':['west','nw'],
+    'ne':['nw','ne'],
+    'east':['ne','east'],
+    'se':['east','se'],
+    'sw':['se','sw']
   }[d]||dir;
 }

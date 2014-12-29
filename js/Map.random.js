@@ -4,15 +4,15 @@ function RandomMap(io) // x, y, percent land, land seeds
   var o = {
     land_ratio: 0.7,
     land_seeds: 8,
-    width: 64,
-    height: 48,
+    width: 32,
+    height: 24,
     tile_size:24
   };
   for(var k in io)
   {
     o[k] = (typeof io[k] !== 'function') ? io[k] : io[k](o,k,io);
   }
-  this.attr = o; console.log(this.attr);
+  this.attr = o;
   
   var land_seeds = []; land_seeds.length = this.get('land_seeds',1) || 1;
   
@@ -75,9 +75,6 @@ function RandomMap(io) // x, y, percent land, land seeds
     ratio = land_tiles_count/(this.get('height')*this.get('width'));
   }
   while(Object.keys(this.tiles_hash).length < this.get('height')*this.get('width'));
-
-    console.log(this.tiles_xy);
-    console.log(this.tiles_hash);
   
   for(var k in this.tiles_xy)
   {
@@ -95,8 +92,6 @@ function RandomMap(io) // x, y, percent land, land seeds
       this.tiles_hash[id].set(dir[y],this.tiles_xy[index.toJson()].get('id'));
     }
   }
-  
-  console.log(this.tiles_hash);
 
   this.attr.tiles = this.tiles_hash;
   
@@ -133,44 +128,3 @@ function MakeRandomSimpleTile(o,ct,coord,land_tile_probability)
   if (!t) console.error("Tile is null!!");
   return t;
 }
-var m;
-var c;
-document.addEventListener('DOMContentLoaded', function(){
-  c = document
-    .getElementById("game")
-    .getContext("2d")
-    ;
-  m = new RandomMap();
-  
-  // set property that would normally be
-  // the player's capitol or notification focus
-  for(var k in m.attr.tiles)
-  {
-    try{
-      m.setZeroTile(m.attr.tiles[k]);
-      break;
-    }catch(e){
-      console.error(e);
-    }
-  }
-  //console.log(m);
-  
-  m.draw(c,{
-    ox:320,
-    oy:240,
-    ts:48
-  });
-  
-  var t = m.getTile(m.drawn_tiles_coords[0].id);
-  console.info(t);
-  
-  var tile_neighbors = [
-    t.n('west'),
-    t.n('east'),
-    t.n('nw'),
-    t.n('ne'),
-    t.n('sw'),
-    t.n('se')
-  ];
-  console.log(tile_neighbors);
-});

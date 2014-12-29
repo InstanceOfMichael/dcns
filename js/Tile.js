@@ -17,8 +17,14 @@ Tile.prototype.n = function (k){//get neighbor
   }
   return null;
 };
-Tile.prototype.draw = function(c,x,y,p,coord,d)
+Tile.prototype.draw = function(c,r,p,coord,d)
 {
+  var x = r.x + 200;
+  var y = r.y + 120;
+  var d = r.d;
+  var coord = r.coord;
+  var tile_recursion_depth = r.tile_recursion_depth;
+
   var t = this.get('t',[]);
   if (t.includes('mountain'))
   {
@@ -41,43 +47,49 @@ Tile.prototype.draw = function(c,x,y,p,coord,d)
     c.fillStyle="rgb("+mt_rand(0,30)+","+mt_rand(220,255)+","+mt_rand(0,30)+")";
   }
   
-  if (false)
+  c.beginPath();
+  c.lineWidth=0.51;
+  c.moveTo(x, y + p.hdft);
+  c.lineTo(x + p.ts/2, y - p.hdft);
+  c.lineTo(x + p.ts,   y + p.hdft);
+  c.lineTo(x + p.ts,   y - p.hdft + p.ts);
+  c.lineTo(x + p.ts/2, y + p.hdft + p.ts);
+  c.lineTo(x, y - p.hdft + p.ts);
+  c.closePath();
+  
+  c.fill();
+  
+  if (!false) // debug
   {
-    c.fillRect(x,y,ts,ts);
-  }
-  else
-  {
+    c.save();
+
+    c.shadowColor = "black"; // string
+    c.shadowOffsetX = 0.75; // integer
+    c.shadowOffsetY = 0.75; // integer
+    c.shadowBlur = 1.5;
+
+    if (coord)
+    {
+      c.fillStyle = "white";
+      c.font = (p.ts*0.20)+"px monospace";
+      c.fillText(coord.x+','+coord.y, x, y+p.ts/2);
+      this.coord = coord.toJson();
+    }
+
+    c.fillStyle = "white";//"rgb(80,95,180)";
+    c.font = (p.ts*0.20)+"px monospace";
+    c.fillText("#"+debug_c1++ + " d:" + tile_recursion_depth, x, y+p.ts/4);
     
-    c.beginPath();
-    c.moveTo(x, y + p.hdft);
-    c.lineTo(x + p.ts/2, y - p.hdft);
-    c.lineTo(x + p.ts,   y + p.hdft);
-    c.lineTo(x + p.ts,   y - p.hdft + p.ts);
-    c.lineTo(x + p.ts/2, y + p.hdft + p.ts);
-    c.lineTo(x, y - p.hdft + p.ts);
-    c.closePath();
+    c.fillStyle = "white";//"cyan";
+    d = d||'c';
+    c.font = (p.ts*0.20)+"px monospace";
+    c.fillText(d, x+(p.ts*0.25), y+p.ts*0.9);
     
-    c.fill();
-  
+    c.stroke();
+    c.restore();
   }
-  
-  if (coord)
-  {
-    c.fillStyle = "purple";
-    c.font = (p.ts*0.33)+"px monospace";
-    c.fillText(coord.x+','+coord.y, x, y+p.ts/2);
-    this.coord = coord.toJson();
-  }
-  
-  c.fillStyle = "cyan";
-  c.font = (p.ts*0.33)+"px monospace";
-  c.fillText(debug_c1++, x, y+p.ts/4);
-  
-  c.fillStyle = "cyan"; d = d||'c';
-  c.font = (p.ts*0.25)+"px monospace";
-  c.fillText(d, x+(p.ts*0.25), y+p.ts*0.9);
-  
   c.stroke();
+  
   return;
 };
 /*
