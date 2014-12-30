@@ -1,11 +1,18 @@
 <!doctype html><html><head>
+<style>
+body{
+  margin:0px;
+}
+</style>
 <script src="js/vendor/mdn.polyfill.js"></script>
 
 <script src="js/functions.js"></script>
 <script src="js/traits/ModelTrait.js"></script>
 <script src="js/Game.js"></script>
 <script src="js/Coordinate.js"></script>
+<script src="js/Unit.js"></script>
 <script src="js/Tile.js"></script>
+<script src="js/Selection.js"></script>
 <script src="js/Map.js"></script>
 <script src="js/InputEvents.js"></script>
 <script src="js/Map.random.js"></script>
@@ -13,4 +20,11 @@
 
 <script src="js/render/canvas/render.js"></script>
 </head><body>
-<canvas id="game" width="800" height="480"></canvas>
+<div style="position: relative;" id="game">
+ <canvas id="layer1" width="800" height="480" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+ <canvas id="layer2" width="800" height="480" style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+ <canvas id="layer3" width="800" height="480" style="position: absolute; left: 0; top: 0; z-index: 2;"></canvas>
+ <canvas id="layer4" width="800" height="480" style="position: absolute; left: 0; top: 0; z-index: 3;"></canvas>
+ <canvas id="layer5" width="800" height="480" style="position: absolute; left: 0; top: 0; z-index: 4;"></canvas>
+ <canvas id="layer6" width="800" height="480" style="position: absolute; left: 0; top: 0; z-index: 5;"></canvas>
+</div>

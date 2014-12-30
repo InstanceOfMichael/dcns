@@ -10,10 +10,10 @@ var ModelTrait = {
     return this;
   },
   hydrate:function(a){
-    this.attr = this.attr||{};
-    for(var k in a) this.attr[k] = a[k];
+    this.attr = assoc_merge(this.attr,a);
   },
   dump:function(){
+    return assoc_merge({},this.attr);
     return this.attr;
   }
 

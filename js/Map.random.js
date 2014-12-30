@@ -95,6 +95,9 @@ function RandomMap(io) // x, y, percent land, land seeds
 
   this.attr.tiles = this.tiles_hash;
   
+  delete this.attr.land_ratio;
+  delete this.attr.land_seeds;
+  
   return new Map(this.attr);
 }
 RandomMap.prototype.get = ModelTrait.get;
@@ -113,7 +116,7 @@ function MakeRandomSimpleTile(o,ct,coord,land_tile_probability)
   {
     t.set('t',['ocean']);
   }
-  else if (mt_rand(0,o.get('height')) > 0.33*Math.pow(Math.abs((2*coord.y)-o.get('height')),2) || ((ct.isWater()||ct.get('t',[]).includes('desert')) && prob(0.5)))
+  else if (mt_rand(0,o.get('height')) > 0.33*Math.pow(Math.abs((2*coord.y)-o.get('height')),2) || ((ct.isWater()||ct.get('t',[]).includes('desert')) && prob(0.4)))
   {
     t.set('t',['desert']);
   }
@@ -124,6 +127,15 @@ function MakeRandomSimpleTile(o,ct,coord,land_tile_probability)
   else
   {
     t.set('Y',mt_rand(0,mt_rand(15,100)));//forests
+    
+    if (prob(0.15))
+    {
+      t.set('farm',100);
+    }
+    else if (prob(0.16))
+    {
+      t.set('mine',100);
+    }
   }
   if (!t) console.error("Tile is null!!");
   return t;

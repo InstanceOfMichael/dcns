@@ -1,8 +1,12 @@
-function Improvement (a)
-{
-    this.hydrate(a);
+var improvements = {
+  road:{
+  
+  },
+  farm:{
+  
+  },
+  mine:{
+  
+  }
+
 }
-Improvement.prototype.get = ModelTrait.get;
-Improvement.prototype.set = ModelTrait.set;
-Improvement.prototype.hydrate = ModelTrait.hydrate;
-Improvement.prototype.dump = ModelTrait.dump;

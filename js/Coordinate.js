@@ -34,15 +34,20 @@ Coordinate.prototype.isInGrid = function (o){
 };
 Coordinate.prototype.wrapX = function (o)
 {
-  while (this.x >= o.get('width'))
+  var c = new Coordinate(this);
+  var w = o.get('width');
+  if (w)
   {
-    this.x -= o.get('width');
+    while (c.x >= w)
+    {
+      c.x -= w;
+    }
+    while (c.x < 0)
+    {
+      c.x += w;
+    }
   }
-  while (this.x < 0)
-  {
-    this.x += o.get('width');
-  }
-  return this;
+  return c;
 };
 Coordinate.prototype.within = function(dis,coord)
 {

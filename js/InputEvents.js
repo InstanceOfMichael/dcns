@@ -1,5 +1,5 @@
-﻿function InputEvents (game,canvas) {
-  this.canvas = canvas;
+﻿function InputEvents (game) {
+  //this.canvas_container = canvas_container;
   this.game = game;
   this.long_left_click = null;
   this.drag_active = null;
@@ -7,15 +7,15 @@
   this.keys_down = {};
 }
 InputEvents.prototype.init = function(){
-  //this.canvas.addEventListener('click', this, false);
-  this.canvas.addEventListener('mousedown', this, false);
-  this.canvas.addEventListener('mouseup', this, false);
-  this.canvas.addEventListener('mousemove', this, false);
+  //document.addEventListener('click', this, false);
+  document.addEventListener('mousedown', this, false);
+  document.addEventListener('mouseup', this, false);
+  document.addEventListener('mousemove', this, false);
   //window.addEventListener('keypress', this, false);
   window.addEventListener('keydown', this, false);
   window.addEventListener('keyup', this, false);
-  //this.canvas.addEventListener('touchstart', this, false);
-  //this.canvas.addEventListener('contextmenu', this, false);
+  //document.addEventListener('touchstart', this, false);
+  //document.addEventListener('contextmenu', this, false);
   document.oncontextmenu = function(e){
     e.preventDefault();
     e.stopPropagation();
@@ -111,16 +111,19 @@ InputEvents.prototype.handleEvent = function(e){
   }
   else if (e.type == 'keydown')
   {
-    this.keys_down[e.which] = kd;
     var kd = e;
+    this.keys_down[e.which] = kd;
     if ({37:1,38:1,39:1,40:1}[e.which])
     {
-      this.keys_down[e.which] = kd;
       this.doOnArrowKey(kd);
+    }
+    else if ({187:1,189:1}[e.which])
+    {
+      this.doOnZoomKey(kd);
     }
     else
     {
-      //console.error(e.type+' '+e.which);
+      console.error(e.type+' '+e.which);
       //console.log(e);
     }
   }
@@ -148,19 +151,43 @@ InputEvents.prototype.handleEvent = function(e){
   return false;
 }
 InputEvents.prototype.doOnLeftClick = function(md,mu){
-  console.info('on Left Click!');
+  //console.info('on Left Click!');
+  
+  console.log('mouse at: '+mu.coord.toJson());
+  
+  
+  var tile = this.game.map.getTileFromMouseEvent(mu);
+  
+  console.log(tile);
+  
+  //if !shiftKeyIsDown 
+  {
+    this.game.map.unselectAll();
+  }
+  
+  if (tile)
+  {
+    var s = new Selection('tiles',tile);
+    
+    tile.selected = s;
+    
+    this.game.map.selected.push(s);
+  }
+  this.game.draw();
+  
+  console.log({selected:s});
 }
 InputEvents.prototype.doOnMiddleClick = function(md,mu){
-  console.info('on Middle Click!');
+  //console.info('on Middle Click!');
 }
 InputEvents.prototype.doOnLongLeftClick = function(md,mu){
-  console.info('on Long Left Click!');
+  //console.info('on Long Left Click!');
 }
 InputEvents.prototype.doOnRightClick = function(md,mu){
-  console.info('on Right Click!');
+  //console.info('on Right Click!');
 }
 InputEvents.prototype.doOnUnknownClick = function(md,mu){
-  console.info('on Unknown Click!');
+  //console.info('on Unknown Click!');
 }
 InputEvents.prototype.doOnDragStart = function(md){
   this.drag_active = md;
@@ -170,8 +197,33 @@ InputEvents.prototype.doOnDragStop = function(md){
   //console.info('on Drag Stop!');
   this.drag_active = null;
 }
+InputEvents.prototype.doOnZoomKey = function(md){
+  //zoom!
+  var p = { //params
+    ox : this.game.map.get('draw_params',{ox:0}).ox,
+    oy : this.game.map.get('draw_params',{oy:0}).oy,
+    z : this.game.map.get('draw_params',{z:1}).z
+  };
+  
+  
+  if (typeof this.keys_down[189] != 'undefined') // zoom out
+  {
+    p.z -= 0.15;
+  }
+  if (typeof this.keys_down[187] != 'undefined') // zoom in
+  {
+    p.z += 0.15;
+  }
+  
+  p.z = Math.min(Math.max(p.z,0.55),3.25)
+  
+  console.log('zoom now set to: '+p.z);
+  
+  this.game.draw(p);
+
+}
 InputEvents.prototype.doOnArrowKey = function(md){
-  console.info('on Arrow Key!');
+  //console.info('on Arrow Key!');
   if (this.drag_active) return;
   
   //console.log(this.keys_down);
