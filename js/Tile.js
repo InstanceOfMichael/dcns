@@ -142,11 +142,11 @@ Tile.prototype.draw = function(c,r,p,coord,d)
     c.tiles2.save();
     c.tiles2.fillStyle="rgb(127,127,0)";
     c.tiles2.font = (fts*0.20)+"px monospace";
-    c.tiles2.fillText("Farm", x+(fts*0.25), y+fts*0.9);
+    c.tiles2.fillText("♒Farm", x+(fts*0.25), y+fts*0.9);
     c.tiles2.stroke();
     c.tiles2.restore();
   }
-  if (this.get('mine'))
+  if (this.get('☗mine'))
   {
     c.tiles2.save();
     c.tiles2.fillStyle="rgb(127,127,255)";
@@ -160,9 +160,13 @@ Tile.prototype.draw = function(c,r,p,coord,d)
   {
     c.tiles3.save();
   
-    c.tiles2.fillStyle="rgb(127,127,255)";
-    c.tiles2.font = (fts*0.66)+"px monospace";
-    c.tiles2.fillText("[:)", x+(fts*-0.1), y+(0.75*fts));
+    c.tiles3.fillStyle="rgb(127,127,255)";
+    c.tiles3.shadowColor = "black";
+    c.tiles3.shadowOffsetX = 0.75; // integer
+    c.tiles3.shadowOffsetY = 0.75; // integer
+    c.tiles3.shadowBlur = 2;
+    c.tiles3.font = (fts*0.66)+"px monospace";
+    c.tiles3.fillText("☃", x+(fts*0.15), y+(0.75*fts));//snowman
     
     c.tiles3.stroke();
     c.tiles3.restore();
