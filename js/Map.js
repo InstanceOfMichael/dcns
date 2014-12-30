@@ -255,6 +255,7 @@ Map.prototype.draw = function(p){ //params
 };
 var debug_c1;
 Map.prototype.getTileFromMouseEvent = function(mu){//mouse up event
+
   var p = this.get('draw_params',{});
   var coord = XY(
     (((mu.coord.x - (0.5*p.cw*(1-p.z)))/p.z) - p.ox)/p.ts,
@@ -270,6 +271,8 @@ Map.prototype.getTileFromMouseEvent = function(mu){//mouse up event
     tile:  this.attr.tiles[this.render_from_tile_id]||null,
     coord: this.render_from_coord ? new Coordinate(this.render_from_coord) : XY(0,0) //home coordinate
   };
+  
+  if (h.coord.toJson()==coord.toJson()) return h.tile;
   
   return h.tile.travel(h.coord,coord);
 }
