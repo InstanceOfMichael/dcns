@@ -39,16 +39,12 @@ InputEvents.prototype.handleEvent = function(e){
         {
         
         }
-        if (md.coord.within(10,Ξ.mouse_coord))
+        else
         {
           Ξ.long_left_click = null;
           Ξ.doOnLongLeftClick(md);
         }
-        else
-        {
-          Ξ.doOnDragStart(md);
-        }
-      },250);
+      },750);
       this.long_left_click = e;
     }
     else
@@ -107,6 +103,16 @@ InputEvents.prototype.handleEvent = function(e){
   {
     //console.info('mousemove!');
     this.mouse_coord = e.coord;
+    if (this.long_left_click && !this.drag_active)
+    {
+      var md = this.long_left_click;
+      if (!md.coord.within(10,this.mouse_coord))
+      {
+        clearTimeout(md.longPressTimer);
+
+        this.doOnDragStart(md);
+      }
+    }
     this.doOnMouseMove(e);
   }
   else if (e.type == 'keydown')
