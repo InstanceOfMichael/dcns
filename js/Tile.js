@@ -146,12 +146,12 @@ Tile.prototype.draw = function(c,r,p,coord,d)
     c.tiles2.stroke();
     c.tiles2.restore();
   }
-  if (this.get('☗mine'))
+  if (this.get('mine'))
   {
     c.tiles2.save();
     c.tiles2.fillStyle="rgb(127,127,255)";
     c.tiles2.font = (fts*0.20)+"px monospace";
-    c.tiles2.fillText("Mine", x+(fts*0.25), y+fts*0.9);
+    c.tiles2.fillText("☗Mine", x+(fts*0.25), y+fts*0.9);
     c.tiles2.stroke();
     c.tiles2.restore();
   }
@@ -159,7 +159,6 @@ Tile.prototype.draw = function(c,r,p,coord,d)
   this.getUnits().forEach(function(e)
   {
     c.tiles3.save();
-  
     c.tiles3.fillStyle="rgb(127,127,255)";
     c.tiles3.shadowColor = "black";
     c.tiles3.shadowOffsetX = 0.75; // integer

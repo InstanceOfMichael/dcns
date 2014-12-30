@@ -58,16 +58,6 @@ InputEvents.prototype.handleEvent = function(e){
     //console.info('mouseup!');
     var mu = e;
     var md = this.long_left_click;
-    
-    if (mu&&md ? linear_distance(md.coord,mu.coord) : null)
-    {
-      /*
-      console.log({
-        //mousedown:md,
-        //mouseup:mu,
-        distance:(mu&&md ? linear_distance(md.coord,mu.coord) : null)
-      });//*/
-    }
 
     if (md)
     {
@@ -166,10 +156,15 @@ InputEvents.prototype.doOnLeftClick = function(md,mu){
   
   console.log(tile);
   
-  //if !shiftKeyIsDown 
+  if (this.game.map.selected.filter(function(s)
   {
-    this.game.map.unselectAll();
+    console.log(s);
+    return s.get('index')=='tiles' && tile.get('id')==s.model.get('id');
+  }).length){
+    tile = null;
   }
+  
+  this.game.map.unselectAll();
   
   if (tile)
   {

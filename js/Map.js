@@ -278,8 +278,7 @@ Map.prototype.getTileFromMouseEvent = function(mu){//mouse up event
 }
 Map.prototype.unselectAll = function(){
   this.selected = this.selected.filter(function(s){
-    s.model.selected = null; return false;
+    s.unselect(); return false;
   });
-  console.log(this);
   return this;
 }
