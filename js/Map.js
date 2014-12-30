@@ -1,9 +1,12 @@
 function Map (a)
 {
+  this.attr = {
+    tiles:{},
+    units:{}
+  };
   this.hydrate(a);
   this.selected = [];
   //this.draw_count = 0;
-  
   this.set('draw_params',{
     ox:0, //offset x
     oy:0, //offset y

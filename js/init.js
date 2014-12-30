@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function(){
   G.ie = new InputEvents(G);
   G.ie.init();
   
+  var tile;
   // set property that would normally be
   // the player's capitol or notification focus
   for(var k in G.map.attr.tiles)
@@ -32,10 +33,19 @@ document.addEventListener('DOMContentLoaded', function(){
     try{
       G.map.setZeroTile(G.map.attr.tiles[k]);
       G.map.setRenderFromTile(G.map.attr.tiles[k]);
+      tile = G.map.attr.tiles[k];
       break;
     }catch(e){
       console.error(e);
     }
+  }
+  if (false)
+  {
+    var unit = new Unit({
+      id:make_id(G.map.attr.units)
+    });
+    G.map.attr.units[unit.get('id')] = unit;
+    tile.set('ul',[unit.get('id')]);
   }
   
   G.draw({

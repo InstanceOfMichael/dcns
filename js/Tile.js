@@ -46,6 +46,12 @@ Tile.prototype.travel = function (c1,c2){//coord1, coord2
   
   return dest;
 };
+Tile.prototype.getUnits = function(){
+  return this.get('ul',[]).map(function(unit_id)
+  {
+    return G.map.attr.units[unit_id];
+  });
+}
 Tile.prototype.draw = function(c,r,p,coord,d)
 {
   var x = r.x;
@@ -150,6 +156,18 @@ Tile.prototype.draw = function(c,r,p,coord,d)
     c.tiles2.restore();
   }
   
+  this.getUnits().forEach(function(e)
+  {
+    c.tiles3.save();
+  
+    c.tiles2.fillStyle="rgb(127,127,255)";
+    c.tiles2.font = (fts*0.66)+"px monospace";
+    c.tiles2.fillText("[:)", x+(fts*-0.1), y+(0.75*fts));
+    
+    c.tiles3.stroke();
+    c.tiles3.restore();
+  });
+  
   if (this.selected)
   {
     c.tiles3.save();
@@ -182,6 +200,7 @@ var example.attr = {
   r:"" // resource // special resource e.g. "wheat","buffalo","rats"
   i:[] // improvements // [Improvement{},Improvement{}] // e.g. road, railroad, farm, plantation
   p:0 => 100 // pollution (value is exponent of damage, also represents half-life) //☠☢
+  ul:[] //unit id list
 
   city_id="" // if the city is the improvement
   road:0 => 100 //health/maintenance 

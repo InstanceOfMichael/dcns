@@ -165,12 +165,14 @@ InputEvents.prototype.doOnLeftClick = function(md,mu){
     this.game.map.unselectAll();
   }
   
-  var s = new Selection('tiles',tile);
-  
-  tile.selected = s;
-  
-  this.game.map.selected.push(s);
-  
+  if (tile)
+  {
+    var s = new Selection('tiles',tile);
+    
+    tile.selected = s;
+    
+    this.game.map.selected.push(s);
+  }
   this.game.draw();
   
   console.log({selected:s});
