@@ -168,14 +168,20 @@ InputEvents.prototype.doOnLeftClick = function(md,mu){
   if (tile)
   {
     var s = new Selection('tiles',tile);
-    
     tile.selected = s;
     
     this.game.map.selected.push(s);
+
+    tile.getUnits().forEach(function(unit)
+    {
+      var s = new Selection('units',unit);
+      unit.selected = s;
+      G.map.selected.push(s);
+    });
   }
   this.game.draw();
   
-  console.log({selected:s});
+  console.log(this.game.map.selected);
 }
 InputEvents.prototype.doOnMiddleClick = function(md,mu){
   //console.info('on Middle Click!');

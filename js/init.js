@@ -4,8 +4,6 @@ var cDOM;
 document.addEventListener('DOMContentLoaded', function(){
   G = new Game();
 
-  
-  
   G.map = new RandomMap({
     width:32*2,
     height:24*2
@@ -39,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function(){
       console.error(e);
     }
   }
-  if (false)
+  if (!false)
   {
     var unit = new Unit({
       id:make_id(G.map.attr.units)
