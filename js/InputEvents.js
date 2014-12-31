@@ -24,6 +24,7 @@ InputEvents.prototype.init = function(){
   
 }
 InputEvents.prototype.handleEvent = function(e){
+  console.log('mouse event: '+e.type);
 
   e.coord = XY(e.x,e.y);
 
@@ -91,7 +92,8 @@ InputEvents.prototype.handleEvent = function(e){
   }
   else if (e.type == 'mousemove')
   {
-    //console.info('mousemove!');
+    console.info('mousemove!');
+    //console.log({'this.long_left_click':this.long_left_click,'this.drag_active':this.drag_active})
     this.mouse_coord = e.coord;
     if (this.long_left_click && !this.drag_active)
     {
@@ -147,18 +149,14 @@ InputEvents.prototype.handleEvent = function(e){
   return false;
 }
 InputEvents.prototype.doOnLeftClick = function(md,mu){
-  //console.info('on Left Click!');
+  console.info('on Left Click!');
   
   console.log('mouse at: '+mu.coord.toJson());
   
-  
   var tile = this.game.map.getTileFromMouseEvent(mu);
-  
-  console.log(tile);
   
   if (this.game.map.selected.filter(function(s)
   {
-    console.log(s);
     return s.get('index')=='tiles' && tile.get('id')==s.model.get('id');
   }).length){
     tile = null;
@@ -181,8 +179,6 @@ InputEvents.prototype.doOnLeftClick = function(md,mu){
     });
   }
   this.game.draw();
-  
-  console.log(this.game.map.selected);
 }
 InputEvents.prototype.doOnMiddleClick = function(md,mu){
   //console.info('on Middle Click!');
@@ -198,10 +194,10 @@ InputEvents.prototype.doOnUnknownClick = function(md,mu){
 }
 InputEvents.prototype.doOnDragStart = function(md){
   this.drag_active = md;
-  //console.info('on Drag Start!');
+  console.info('on Drag Start!');
 }
 InputEvents.prototype.doOnDragStop = function(md){
-  //console.info('on Drag Stop!');
+  console.info('on Drag Stop!');
   this.drag_active = null;
 }
 InputEvents.prototype.doOnZoomKey = function(md){

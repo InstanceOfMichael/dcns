@@ -261,7 +261,6 @@ Map.prototype.getTileFromMouseEvent = function(mu){//mouse up event
   coord.x = Math.floor(coord.x);
   coord.y = Math.floor(coord.y);
   
-  console.log(this);
   var h = {
     tile:  this.attr.tiles[this.render_from_tile_id]||null,
     coord: this.render_from_coord ? new Coordinate(this.render_from_coord) : XY(0,0) //home coordinate
