@@ -94,7 +94,7 @@ Tile.prototype.draw = function(c,r,p,coord,d)
   c.tiles1.closePath();
   
   c.tiles1.fill();
-  
+
   if (!false) // debug
   {
     c.tiles1.save();
@@ -146,6 +146,7 @@ Tile.prototype.draw = function(c,r,p,coord,d)
     c.tiles2.stroke();
     c.tiles2.restore();
   }
+
   if (this.get('mine'))
   {
     c.tiles2.save();
@@ -174,10 +175,10 @@ Tile.prototype.draw = function(c,r,p,coord,d)
   if (this.selected)
   {
     c.tiles3.save();
+    c.tiles3.beginPath();
     
     c.tiles3.strokeStyle="rgb(255,0,0)";
   
-    c.tiles3.beginPath();
     c.tiles3.lineWidth=2;
     c.tiles3.moveTo(x, y + p.hdft);
     c.tiles3.lineTo(x + fts/2, y - p.hdft);
@@ -186,9 +187,9 @@ Tile.prototype.draw = function(c,r,p,coord,d)
     c.tiles3.lineTo(x + fts/2, y + p.hdft + fts);
     c.tiles3.lineTo(x, y - p.hdft + fts);
     c.tiles3.closePath();
-    
+
     c.tiles3.stroke();
-    
+
     c.tiles3.restore();
   }
   

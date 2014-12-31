@@ -88,18 +88,13 @@ Map.prototype.draw = function(p){ //params
   this.set('draw_params',p);
   
   var max_tile_recursion_depth = parseInt((p.cw*p.ch)/(p.ts*p.ts));
-  //console.info('max_tile_recursion_depth: '+max_tile_recursion_depth);
-
-  //console.info("Map.render()")
-  //console.log(this);
-  //console.log(p);
-  
-  //this.draw_count++;
 
   //blank background
-  c.tiles1.clearRect(0, 0, p.cw, p.ch);
-  c.tiles2.clearRect(0, 0, p.cw, p.ch);
-  c.tiles3.clearRect(0, 0, p.cw, p.ch);
+  for(var k in c)
+  {
+    c[k].clearRect(0, 0, p.cw, p.ch);
+    c[k].beginPath(); // this fixes a bug where ghost lines appear
+  }
   
   tile = this.attr.tiles[p.tile_id];
   
