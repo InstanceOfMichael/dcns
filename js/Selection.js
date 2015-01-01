@@ -16,3 +16,36 @@ var example.attr = {
   index:"" // map index e.g. "tiles","units"
 };
 */
+Game.prototype.drawSelectInfoBox = function()
+{
+  var c = this.map.canvas;
+  var p = this.map.get('draw_params',{});
+  var collection = this.map.selected||[];
+  c.selectInfo.clearRect(0,0,p.cw,p.ch);
+  
+  if (collection.length)
+  {
+    var text = "selected: ";
+    
+    text += collection.map(function(s)
+    {
+      return s.model.constructor.name;
+    })
+    .join(', ');
+    
+    c.selectInfo.save();
+    c.selectInfo.fillStyle="rgba(100,100,100,0.44)";
+    c.selectInfo.fillRect(0, p.ch-80,240,80);
+    c.selectInfo.fillStyle="rgb(255,255,255)";
+    c.selectInfo.shadowColor = "black"; // string
+    c.selectInfo.shadowOffsetX = 0.75; // integer
+    c.selectInfo.shadowOffsetY = 0.75; // integer
+    c.selectInfo.shadowBlur = 1.5;
+
+    c.selectInfo.fillStyle = "white";
+    c.selectInfo.font = "14px monospace";
+    c.selectInfo.fillText(text,0+10, p.ch-80+20);
+
+    c.selectInfo.restore();
+  }
+}

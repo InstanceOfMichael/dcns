@@ -8,15 +8,17 @@
   this.mo_tiles = [];
 }
 InputEvents.prototype.init = function(){
-  //document.addEventListener('click', this, false);
   document.addEventListener('mousedown', this, false);
+  //document.addEventListener('touchstart', this, false);
+
   document.addEventListener('mouseup', this, false);
+  //document.addEventListener('touchend', this, false);
+  
   document.addEventListener('mousemove', this, false);
-  //window.addEventListener('keypress', this, false);
+  //document.addEventListener('touchmove', this, false);
+
   window.addEventListener('keydown', this, false);
   window.addEventListener('keyup', this, false);
-  //document.addEventListener('touchstart', this, false);
-  //document.addEventListener('contextmenu', this, false);
   document.oncontextmenu = function(e){
     e.preventDefault();
     e.stopPropagation();
@@ -176,7 +178,9 @@ InputEvents.prototype.doOnLeftClick = function(md,mu){
       G.map.selected.push(s);
     });
   }
+  
   this.game.draw();
+  this.game.drawSelectInfoBox();
 }
 InputEvents.prototype.doOnMiddleClick = function(md,mu){
   //console.info('on Middle Click!');
