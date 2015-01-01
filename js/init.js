@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', function(){
     tiles3:'layer3',
     ui1:'layer4',
     ui2:'layer5',
-    ui3:'layer6'
+    ui3:'layer6',
+    selectInfo:'layer7',
+    tooltip:'layer8'
   };
   for(var k in G.map.canvas)
   {

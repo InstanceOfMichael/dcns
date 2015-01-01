@@ -90,7 +90,7 @@ Map.prototype.draw = function(p){ //params
   var max_tile_recursion_depth = parseInt((p.cw*p.ch)/(p.ts*p.ts));
 
   //blank background
-  for(var k in c)
+  for(var k in {tiles1:1,tiles2:1,tiles3:1})
   {
     c[k].clearRect(0, 0, p.cw, p.ch);
     c[k].beginPath(); // this fixes a bug where ghost lines appear
@@ -252,14 +252,7 @@ var debug_c1;
 Map.prototype.getTileFromMouseEvent = function(mu){//mouse up event
 
   var p = this.get('draw_params',{});
-  var coord = XY(
-    (((mu.coord.x - (0.5*p.cw*(1-p.z)))/p.z) - p.ox)/p.ts,
-    (((mu.coord.y - (0.5*p.ch*(1-p.z)))/p.z) - p.oy)/p.ts
-  );
-  coord.x = coord.x - (Math.floor(coord.y)*0.5);
-  
-  coord.x = Math.floor(coord.x);
-  coord.y = Math.floor(coord.y);
+  var coord = mu.coord.toMapCoord(p);
   
   var h = {
     tile:  this.attr.tiles[this.render_from_tile_id]||null,

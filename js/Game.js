@@ -1,6 +1,7 @@
 function Game (a)
 {
-    this.hydrate(a);
+  this.hydrate(a);
+  this.tooltip = new ToolTip(null);
 }
 Game.prototype.get = ModelTrait.get;
 Game.prototype.set = ModelTrait.set;

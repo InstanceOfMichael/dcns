@@ -53,6 +53,20 @@ Coordinate.prototype.within = function(dis,coord)
 {
   return linear_distance(coord,this) < dis;
 };
+Coordinate.prototype.toMapCoord = function(p)
+{
+  var coord = this;
+  var mc = XY(
+    (((coord.x - (0.5*p.cw*(1-p.z)))/p.z) - p.ox)/p.ts,
+    (((coord.y - (0.5*p.ch*(1-p.z)))/p.z) - p.oy)/p.ts
+  );
+  mc.x = mc.x - (Math.floor(mc.y)*0.5);
+  
+  mc.x = Math.floor(mc.x);
+  mc.y = Math.floor(mc.y);
+  
+  return mc;
+};
 
 function TestCoordinate (){
   console.log({

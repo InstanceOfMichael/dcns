@@ -5,6 +5,7 @@
   this.drag_active = null;
   this.mouse_coord = XY(0,0);
   this.keys_down = {};
+  this.mo_tiles = [];
 }
 InputEvents.prototype.init = function(){
   //document.addEventListener('click', this, false);
@@ -24,7 +25,6 @@ InputEvents.prototype.init = function(){
   
 }
 InputEvents.prototype.handleEvent = function(e){
-  console.log('mouse event: '+e.type);
 
   e.coord = XY(e.x,e.y);
 
@@ -92,8 +92,6 @@ InputEvents.prototype.handleEvent = function(e){
   }
   else if (e.type == 'mousemove')
   {
-    console.info('mousemove!');
-    //console.log({'this.long_left_click':this.long_left_click,'this.drag_active':this.drag_active})
     this.mouse_coord = e.coord;
     if (this.long_left_click && !this.drag_active)
     {
@@ -286,5 +284,18 @@ InputEvents.prototype.doOnMouseMove = function(mm){
   else
   {
   
+  }
+  
+  var tile = this.game.map.getTileFromMouseEvent(mm);
+  
+  if (tile)
+  {
+    if (tile.get('id') && this.mo_tiles.length == 0 || (this.mo_tiles[0].get('id') != tile.get('id')))
+    {
+      this.mo_tiles.unshift(tile);
+      if (this.mo_tiles.length > 24) this.mo_tiles.length = 24;
+      
+      this.game.tooltip.draw(this.game.map.canvas,this.game.map,tile,mm.coord);
+    }
   }
 }
