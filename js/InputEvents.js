@@ -259,32 +259,24 @@ InputEvents.prototype.doOnMouseMove = function(mm){
   {
     var md = this.drag_active;
     
-    if (this.game.map.selected.length)
+    //pan!
+    if (!md.map_original)
     {
-      console.log('this.game.map.selected.length: '+ this.game.map.selected.length);
-      
-    }
-    else
-    {
-      //pan!
-      if (!md.map_original)
-      {
-        md.map_original = {
-          coord : XY(
-            this.game.map.get('draw_params',{ox:0}).ox,
-            this.game.map.get('draw_params',{oy:0}).oy
-          )
-        };
-      }
-      
-      var p = { //params
-        ox : md.map_original.coord.x - 3*(md.coord.x - mm.coord.x),
-        oy : md.map_original.coord.y - 3*(md.coord.y - mm.coord.y)
+      md.map_original = {
+        coord : XY(
+          this.game.map.get('draw_params',{ox:0}).ox,
+          this.game.map.get('draw_params',{oy:0}).oy
+        )
       };
-      
-      
-      this.game.draw(p);
     }
+    
+    var p = { //params
+      ox : md.map_original.coord.x - 3*(md.coord.x - mm.coord.x),
+      oy : md.map_original.coord.y - 3*(md.coord.y - mm.coord.y)
+    };
+    
+    
+    this.game.draw(p);
     
   }
   else
