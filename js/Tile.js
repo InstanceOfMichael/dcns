@@ -62,26 +62,30 @@ Tile.prototype.draw = function(c,r,p,coord,d)
   var tile_recursion_depth = r.tile_recursion_depth;
 
   var t = this.get('t',[]);
-  if (t.includes('mountain'))
+  if (!t.t1FillStyle)
   {
-    c.tiles1.fillStyle="rgb(70,70,70)";
+    if (t.includes('mountain'))
+    {
+      t.t1FillStyle="rgb(70,70,70)";
+    }
+    else if (t.includes('ocean','sea','lake'))
+    {
+      t.t1FillStyle="rgb(0,0,"+mt_rand(200,235)+")";
+    }
+    else if (t.includes('plains'))
+    {
+      t.t1FillStyle="rgb("+mt_rand(110,130)+","+mt_rand(190,210)+","+mt_rand(40,50)+")";
+    }
+    else if (t.includes('desert'))
+    {
+      t.t1FillStyle="rgb("+mt_rand(245,250)+","+mt_rand(225,245)+","+mt_rand(115,135)+")";
+    }
+    else
+    {
+      t.t1FillStyle="rgb("+mt_rand(0,20)+","+mt_rand(230,255)+","+mt_rand(0,20)+")";
+    }
   }
-  else if (t.includes('ocean','sea','lake'))
-  {
-    c.tiles1.fillStyle="rgb(0,0,"+mt_rand(127,255)+")";
-  }
-  else if (t.includes('plains'))
-  {
-    c.tiles1.fillStyle="rgb("+mt_rand(100,140)+","+mt_rand(180,220)+","+mt_rand(30,60)+")";
-  }
-  else if (t.includes('desert'))
-  {
-    c.tiles1.fillStyle="rgb("+mt_rand(240,255)+","+mt_rand(215,255)+","+mt_rand(105,145)+")";
-  }
-  else
-  {
-    c.tiles1.fillStyle="rgb("+mt_rand(0,30)+","+mt_rand(220,255)+","+mt_rand(0,30)+")";
-  }
+  c.tiles1.fillStyle = t.t1FillStyle;
   
   c.tiles1.beginPath();
   c.tiles1.lineWidth=0.51;
