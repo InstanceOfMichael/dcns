@@ -51,7 +51,7 @@ Tile.prototype.getUnits = function(){
   {
     return G.map.attr.units[unit_id];
   });
-}
+};
 Tile.prototype.draw = function(c,r,p,coord,d)
 {
   var x = r.x;

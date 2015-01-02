@@ -25,7 +25,7 @@ function RandomMap(io) // x, y, percent land, land seeds
     var is_unique;
     do{
       land_seeds[x] = XY(mt_rand(0,this.get('width')-1),mt_rand(0,this.get('height')-1));
-      is_unique = !land_seeds.slice(0,x).filter(function(e){ return e.toJson()==land_seeds[x].toJson(); }).length
+      is_unique = !land_seeds.slice(0,x).filter(function(e){ return e.toJson()==land_seeds[x].toJson(); }).length;
     }
     while(!is_unique);
      

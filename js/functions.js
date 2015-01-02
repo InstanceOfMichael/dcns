@@ -85,7 +85,7 @@ function without_opposite_dir(a,d){
   {
     return e!=v;
   });
-};
+}
 function generate_sub_direction_arr(d){
   return {
     'west':['sw','west'],

@@ -6,11 +6,11 @@ Unit.prototype.get = ModelTrait.get;
 Unit.prototype.set = ModelTrait.set;
 Unit.prototype.hydrate = ModelTrait.hydrate;
 Unit.prototype.dump = ModelTrait.dump;
-Unit.prototype.isLand  = function(){ return this.get('d','l')=='l'; }
-Unit.prototype.isSea   = function(){ return this.get('d','l')=='w'; }
-Unit.prototype.isAit   = function(){ return this.get('d','l')=='a'; }
-Unit.prototype.isSpace = function(){ return this.get('d','l')=='s'; }
-Unit.prototype.getToolTipName = function(){ return 'unit_name'; }
+Unit.prototype.isLand  = function(){ return this.get('d','l')=='l'; };
+Unit.prototype.isSea   = function(){ return this.get('d','l')=='w'; };
+Unit.prototype.isAit   = function(){ return this.get('d','l')=='a'; };
+Unit.prototype.isSpace = function(){ return this.get('d','l')=='s'; };
+Unit.prototype.getToolTipName = function(){ return 'unit_name'; };
 /*
 var example.attr = {
   b:[] //badge id list

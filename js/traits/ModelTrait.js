@@ -14,7 +14,6 @@ var ModelTrait = {
   },
   dump:function(){
     return assoc_merge({},this.attr);
-    return this.attr;
   }
 
 };

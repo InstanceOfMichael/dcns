@@ -25,7 +25,7 @@ InputEvents.prototype.init = function(){
     return false;
   };
   
-}
+};
 InputEvents.prototype.handleEvent = function(e){
 
   e.coord = XY(e.x,e.y);
@@ -36,7 +36,8 @@ InputEvents.prototype.handleEvent = function(e){
     if (!this.long_left_click)
     {
       var Ξ = this;
-      e.longPressTimer = setTimeout(function(){
+      e.longPressTimer = setTimeout(function()
+      {
         var md = Ξ.long_left_click;
         if (!md)
         {
@@ -127,10 +128,11 @@ InputEvents.prototype.handleEvent = function(e){
   }
   else if (e.type == 'keyup')
   {
+    var ku = e;
     delete this.keys_down[e.which];
     if ({37:1,38:1,39:1,40:1}[e.which])
     {
-      this.doOnArrowKey(kd);
+      this.doOnArrowKey(ku);
     }
     else
     {
@@ -147,7 +149,7 @@ InputEvents.prototype.handleEvent = function(e){
   e.preventDefault();
   e.stopPropagation();
   return false;
-}
+};
 InputEvents.prototype.doOnLeftClick = function(md,mu){
   console.info('on Left Click!');
   
@@ -181,27 +183,27 @@ InputEvents.prototype.doOnLeftClick = function(md,mu){
   
   this.game.draw();
   this.game.drawSelectInfoBox();
-}
+};
 InputEvents.prototype.doOnMiddleClick = function(md,mu){
   //console.info('on Middle Click!');
-}
+};
 InputEvents.prototype.doOnLongLeftClick = function(md,mu){
   //console.info('on Long Left Click!');
-}
+};
 InputEvents.prototype.doOnRightClick = function(md,mu){
   //console.info('on Right Click!');
-}
+};
 InputEvents.prototype.doOnUnknownClick = function(md,mu){
   //console.info('on Unknown Click!');
-}
+};
 InputEvents.prototype.doOnDragStart = function(md){
   this.drag_active = md;
   console.info('on Drag Start!');
-}
+};
 InputEvents.prototype.doOnDragStop = function(md){
   console.info('on Drag Stop!');
   this.drag_active = null;
-}
+};
 InputEvents.prototype.doOnZoomKey = function(md){
   //zoom!
   var p = { //params
@@ -220,13 +222,13 @@ InputEvents.prototype.doOnZoomKey = function(md){
     p.z += 0.15;
   }
   
-  p.z = Math.min(Math.max(p.z,0.55),3.25)
+  p.z = Math.min(Math.max(p.z,0.55),3.25);
   
   console.log('zoom now set to: '+p.z);
   
   this.game.draw(p);
 
-}
+};
 InputEvents.prototype.doOnArrowKey = function(md){
   //console.info('on Arrow Key!');
   if (this.drag_active) return;
@@ -250,7 +252,7 @@ InputEvents.prototype.doOnArrowKey = function(md){
   
   this.game.draw(p);
 
-}
+};
 InputEvents.prototype.doOnMouseMove = function(mm){
   //console.info('mouse position (x:'+mm.coord.x+',y:'+mm.coord.y+')');
   if (this.drag_active)
@@ -294,7 +296,7 @@ InputEvents.prototype.doOnMouseMove = function(mm){
   
   if (tile)
   {
-    if (tile.get('id') && this.mo_tiles.length == 0 || (this.mo_tiles[0].get('id') != tile.get('id')))
+    if (tile.get('id') && this.mo_tiles.length === 0 || (this.mo_tiles[0].get('id') != tile.get('id')))
     {
       this.mo_tiles.unshift(tile);
       if (this.mo_tiles.length > 24) this.mo_tiles.length = 24;
@@ -302,4 +304,4 @@ InputEvents.prototype.doOnMouseMove = function(mm){
       this.game.tooltip.draw(this.game.map.canvas,this.game.map,tile,mm.coord);
     }
   }
-}
+};

@@ -48,4 +48,4 @@ Game.prototype.drawSelectInfoBox = function()
 
     c.selectInfo.restore();
   }
-}
+};

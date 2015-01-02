@@ -38,7 +38,7 @@ Map.prototype.hydrate = function(a){
     }
     this.attr.tiles[tile_id].parent = this;
   }
-}
+};
 Map.prototype.dump = function(){
   var a = ModelTrait.dump.call(this);
 
@@ -70,7 +70,7 @@ Map.prototype.getTile = function(id){
 };
 Map.prototype.getFinalTileSize = function(){
   return this.get('draw_params').ts * this.get('draw_params').z;
-}
+};
 Map.prototype.draw = function(p){ //params
   var c = this.canvas;
   var tile = null;
@@ -87,7 +87,7 @@ Map.prototype.draw = function(p){ //params
   },p);
   this.set('draw_params',p);
   
-  var max_tile_recursion_depth = parseInt((p.cw*p.ch)/(p.ts*p.ts));
+  var max_tile_recursion_depth = parseInt((p.cw*p.ch)/(p.ts*p.ts),10);
 
   //blank background
   for(var k in {tiles1:1,tiles2:1,tiles3:1})
@@ -144,7 +144,7 @@ Map.prototype.draw = function(p){ //params
       if (map.render_from_tile_id == tile.get('id'))
       {
         var nTile = tile;
-        var nCoord = new Coordinate(coord)
+        var nCoord = new Coordinate(coord);
         if (r.y - p.hdft > p.ch && nTile.n('ne'))
         {
           nTile = nTile.n('ne');
@@ -214,22 +214,23 @@ Map.prototype.draw = function(p){ //params
     sub_dir = sub_dir||generate_sub_direction_arr(d);
     //var sub_dir = dir;
     
-    for(var y = 0; y < sub_dir.length; y++)
+    sub_dir.forEach(function(direction)
     {
-      var nTile = tile.n(sub_dir[y]);
+      var nTile = tile.n(direction);
       
       fn(
         c,
         map,
         nTile,
-        coord[sub_dir[y]](),
+        coord[direction](),
         p,
         fn,
         tile_recursion_depth,
-        sub_dir[y],
-        without_opposite_dir(sub_dir,sub_dir[y])
+        direction,
+        without_opposite_dir(sub_dir,direction)
       );
-    }
+    });
+    
     return true;
   };
   
@@ -262,10 +263,10 @@ Map.prototype.getTileFromMouseEvent = function(mu){//mouse up event
   if (h.coord.toJson()==coord.toJson()) return h.tile;
   
   return h.tile.travel(h.coord,coord);
-}
+};
 Map.prototype.unselectAll = function(){
   this.selected = this.selected.filter(function(s){
     s.unselect(); return false;
   });
   return this;
-}
+};

@@ -58,4 +58,4 @@ ToolTip.prototype.draw = function(c,map,model,r_coord)
 
     c.tooltip.restore();
   }
-}
+};
