@@ -25,15 +25,16 @@ Game.prototype.drawSelectInfoBox = function()
   
   if (collection.length)
   {
-    var text = "selected: ";
-    
-    text += collection.map(function(s)
-    {
-      return s.model.constructor.name;
-    })
-    .join(', ');
-    
     c.selectInfo.save();
+    var text_arr = ["selected:"];
+    
+    text_arr = text_arr.concat(collection.map(function(s)
+    {
+      return s.model.getSelectInfoBoxText();
+    }));
+    
+    var yΔ = 0;
+
     c.selectInfo.fillStyle="rgba(100,100,100,0.44)";
     c.selectInfo.fillRect(0, p.ch-80,240,80);
     c.selectInfo.fillStyle="rgb(255,255,255)";
@@ -41,10 +42,16 @@ Game.prototype.drawSelectInfoBox = function()
     c.selectInfo.shadowOffsetX = 0.75; // integer
     c.selectInfo.shadowOffsetY = 0.75; // integer
     c.selectInfo.shadowBlur = 1.5;
-
     c.selectInfo.fillStyle = "white";
     c.selectInfo.font = "14px monospace";
-    c.selectInfo.fillText(text,0+10, p.ch-80+20);
+    
+    console.log(text_arr);
+    
+    text_arr.forEach(function(text)
+    {
+      c.selectInfo.fillText(text,0+10, p.ch-80+20+yΔ);
+      yΔ+=20;
+    });
 
     c.selectInfo.restore();
   }

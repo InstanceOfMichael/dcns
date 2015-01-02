@@ -67,6 +67,14 @@ Coordinate.prototype.toMapCoord = function(p)
   
   return mc;
 };
+Coordinate.prototype.toNonMapCoord = function(p)
+{
+  var coord = this;
+  return new Coordinate({
+    x: (0.5*p.cw*(1-p.z)) + p.z * (coord.x * p.ts + p.ox) + (p.ts * p.z * (coord.y)*0.5),
+    y: (0.5*p.ch*(1-p.z)) + p.z * (coord.y * p.ts + p.oy),
+  });
+};
 
 function TestCoordinate (){
   console.log({

@@ -12,11 +12,14 @@ document.addEventListener('DOMContentLoaded', function(){
     tiles1:'layer1',
     tiles2:'layer2',
     tiles3:'layer3',
-    ui1:'layer4',
-    ui2:'layer5',
-    ui3:'layer6',
-    selectInfo:'layer7',
-    tooltip:'layer8'
+    units1:'layer4',
+    units2:'layer5',
+    units3:'layer6',
+    ui1:   'layer7',
+    ui2:   'layer8',
+    ui3:   'layer9',
+    selectInfo:'layer10',
+    tooltip:   'layer11'
   };
   for(var k in G.map.canvas)
   {

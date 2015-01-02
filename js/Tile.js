@@ -17,6 +17,19 @@ Tile.prototype.n = function (k){//get neighbor
   }
   return null;
 };
+Tile.prototype.allNeighbors = function (){//get all neigbors
+  return [
+    this.n('nw'),
+    this.n('ne'),
+    this.n('east'),
+    this.n('se'),
+    this.n('sw'),
+    this.n('west')
+  ].filter(function(t)
+  {
+    return t;
+  });
+};
 Tile.prototype.travel = function (c1,c2){//coord1, coord2
   co = c1;
   var dest = null;
@@ -52,6 +65,16 @@ Tile.prototype.getUnits = function(){
     return G.map.attr.units[unit_id];
   });
 };
+Tile.prototype.getTerrains = function(){
+  if (this.get('t',[]).length===0)
+  {
+    return ['grassland'];
+  }
+  return this.get('t');
+}
+Tile.prototype.getSelectInfoBoxText = function(){
+  return this.getTerrains().join(', ');
+}
 Tile.prototype.draw = function(c,r,p,coord,d)
 {
   var x = r.x;
@@ -163,26 +186,24 @@ Tile.prototype.draw = function(c,r,p,coord,d)
   
   this.getUnits().forEach(function(e)
   {
-    c.tiles3.save();
-    c.tiles3.fillStyle="rgb(127,127,255)";
-    c.tiles3.shadowColor = "black";
-    c.tiles3.shadowOffsetX = 0.75; // integer
-    c.tiles3.shadowOffsetY = 0.75; // integer
-    c.tiles3.shadowBlur = 2;
-    c.tiles3.font = (fts*0.66)+"px monospace";
-    c.tiles3.fillText("☃", x+(fts*0.15), y+(0.75*fts));//snowman
+    c.units2.save();
+    c.units2.fillStyle="rgb(127,127,255)";
+    c.units2.shadowColor = "black";
+    c.units2.shadowOffsetX = 0.75; // integer
+    c.units2.shadowOffsetY = 0.75; // integer
+    c.units2.shadowBlur = 2;
+    c.units2.font = (fts*0.66)+"px monospace";
+    c.units2.fillText("☃", x+(fts*0.15), y+(0.75*fts));//snowman
     
-    c.tiles3.stroke();
-    c.tiles3.restore();
+    c.units2.stroke();
+    c.units2.restore();
   });
   
   if (this.selected)
   {
     c.tiles3.save();
     c.tiles3.beginPath();
-    
     c.tiles3.strokeStyle="rgb(0,0,255)";
-  
     c.tiles3.lineWidth=2;
     c.tiles3.moveTo(x, y + p.hdft);
     c.tiles3.lineTo(x + fts/2, y - p.hdft);
@@ -191,23 +212,25 @@ Tile.prototype.draw = function(c,r,p,coord,d)
     c.tiles3.lineTo(x + fts/2, y + p.hdft + fts);
     c.tiles3.lineTo(x, y - p.hdft + fts);
     c.tiles3.closePath();
-
-    c.tiles3.stroke();    c.tiles3.beginPath();
-    
-    c.tiles3.strokeStyle="rgb(255,0,0)";
-  
-    c.tiles3.lineWidth=2;
-    c.tiles3.moveTo(x, y + p.hdft);
-    c.tiles3.lineTo(x + fts/2, y - p.hdft);
-    c.tiles3.lineTo(x + fts,   y + p.hdft);
-    c.tiles3.lineTo(x + fts,   y - p.hdft + fts);
-    c.tiles3.lineTo(x + fts/2, y + p.hdft + fts);
-    c.tiles3.lineTo(x, y - p.hdft + fts);
-    c.tiles3.closePath();
-
     c.tiles3.stroke();
 
+    c.tiles3.beginPath();
+    c.tiles3.strokeStyle="rgb(255,0,0)";
+    c.tiles3.lineWidth=2;
+    c.tiles3.moveTo(x, y + p.hdft);
+    c.tiles3.lineTo(x + fts/2, y - p.hdft);
+    c.tiles3.lineTo(x + fts,   y + p.hdft);
+    c.tiles3.lineTo(x + fts,   y - p.hdft + fts);
+    c.tiles3.lineTo(x + fts/2, y + p.hdft + fts);
+    c.tiles3.lineTo(x, y - p.hdft + fts);
+    c.tiles3.closePath();
+    c.tiles3.stroke();
     c.tiles3.restore();
+    
+    if (this.getUnits()[0])
+    {
+      this.getUnits()[0].drawMovableTileLines(c,r,p,this);
+    }
   }
   
   return;

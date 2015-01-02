@@ -90,7 +90,7 @@ Map.prototype.draw = function(p){ //params
   var max_tile_recursion_depth = parseInt((p.cw*p.ch)/(p.ts*p.ts),10);
 
   //blank background
-  for(var k in {tiles1:1,tiles2:1,tiles3:1})
+  for(var k in {tiles1:1,tiles2:1,tiles3:1,units1:1,units2:1,units3:1})
   {
     c[k].clearRect(0, 0, p.cw, p.ch);
     c[k].beginPath(); // this fixes a bug where ghost lines appear
@@ -127,13 +127,12 @@ Map.prototype.draw = function(p){ //params
     });
     
     var fts = p.ts * p.z; // final tile size
-    var r = {
-      x: (0.5*p.cw*(1-p.z)) + p.z * (coord.x * p.ts + p.ox) + (p.ts * p.z * (coord.y)*0.5),
-      y: (0.5*p.ch*(1-p.z)) + p.z * (coord.y * p.ts + p.oy),
-      coord:coord,
-      d:d,
-      tile_recursion_depth:tile_recursion_depth
-    };
+    
+    var r = coord.toNonMapCoord(p);
+    
+    r.coord = coord,
+    r.d = d,
+    r.tile_recursion_depth = tile_recursion_depth
     if (map.render_from_tile_id == tile.get('id'))
     {
       //console.log({p:p,r:r});
